@@ -1,0 +1,7 @@
+We here at the cat super market beleave in a good deal.
+so we decided to give you two cat pics for the price of one
+can you find the second cat picture?
+
+Hint:
+  try to use XXD to look for magic bytes.
+  checkout binwalk/ foremost
