@@ -12,8 +12,9 @@ RUN chmod 755 /start.sh
 RUN rm /bin/cat
 COPY ./flag.txt /flag.txt
 
+RUN mkdir /nonexistent
 
+RUN useradd -ms /bin/bash bob
 EXPOSE 31337/tcp
 CMD ["./start.sh"]
 
-#USER nobody
