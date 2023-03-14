@@ -1,0 +1,26 @@
+FROM debian:latest
+
+RUN apt-get update && apt-get install -y vsftpd tcpdump ftp
+
+# Configure vsftpd
+RUN echo "local_enable=YES" >> /etc/vsftpd.conf
+RUN echo "write_enable=YES" >> /etc/vsftpd.conf
+RUN echo "chroot_local_user=YES" >> /etc/vsftpd.conf
+RUN echo "allow_writeable_chroot=YES" >> /etc/vsftpd.conf
+RUN echo "pasv_min_port=40000" >> /etc/vsftpd.conf
+RUN echo "pasv_max_port=40010" >> /etc/vsftpd.conf
+
+# Create a test file to upload to the vsftpd server
+RUN echo "This is a test file" > test.txt
+
+# Start the vsftpd server in the background
+CMD vsftpd & sleep 2 && \
+    # Connect to the vsftpd server and download the test file
+    echo "get test.txt" | ftp -p localhost && \
+    # Capture network traffic using tcpdump and save it to a file
+    tcpdump -i any -w /tcpdump.pcap && \
+    # Wait for tcpdump to finish writing the file
+    sleep 2 && \
+    # Stop the vsftpd server
+    killall vsftpd
+
