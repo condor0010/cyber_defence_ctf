@@ -7,3 +7,4 @@ solve:
 	echo -ne '\x00\x00\x05\xA0\x00\x00\x05\xA0' | dd of=chall.png bs=1 seek=16 conv=notrunc
 
 
+
